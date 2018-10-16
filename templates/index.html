@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="http://unpkg.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.3.2/theme-chalk/index.css">
+    <script src="http://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="http://unpkg.com/element-ui/lib/umd/locale/ja.js"></script>
+
+    <title>Album example for Bootstrap</title>
+
+    <style>
+        #taskName:hover{
+            cursor: pointer !important;
+            border: 1px solid lightblue;
+            transition: 0.4s;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container-fluid btn-group" id="Main">
+<div style="width: 900px !important;position:fixed">
+    <div class="alert alert-secondary">
+    <h4 class="text-center">Tasks</h4>
+    <div class="form-group" id="formData">
+        <input id="titleSome" type="text" class="form-control" name="name" placeholder="Title...">
+        <br>
+        <textarea id="textSome" type="text" class="form-control" name="text" placeholder="Text..."></textarea>
+        <br>
+        <div class="text-center">
+            <button id="createButton" class="btn btn-primary btn-large" v-on:click="newOne">Add</button>
+        </div>
+    </div>
+    </div>
+            <div id="actualData"></div>
+</div>
+    <hr>
+<div style="width: 800px !important;">
+    <div class="row">
+        <div class="col-4">
+            <div class="list-group" v-for="task in tasks">
+                <div class="btn-group">
+                <button v-on:click="display(task)" id="taskName" type="button" class="list-group-item list-group-item-action">
+                    $( task.name )
+                </button>
+                <button class="btn-danger">X</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+
+<script>
+    Vue.prototype.$http = axios;
+    new Vue({
+        delimiters: ['$(', ')'],
+        el:"#Main",
+        data: {
+            tasks : [{
+                    name:'Name1',
+                    text:'Text1',
+                    updatedAt:'Time1'  
+                }],
+        },
+        methods: {
+            display: function(task) {
+                 document.getElementById("actualData").innerHTML = 
+                 "<h3>"+task.name+"</h3>"+
+                 "<p>"+task.text+"</p>"+
+                 "<small>"+task.updatedAt+"</small>"
+            },
+            newOne: function() {
+                      
+                var title = document.getElementById("titleSome").value
+                var text = document.getElementById("textSome").value
+
+                      if ((title == "") || (text == "")){
+                          alert("Forget something")
+                          throw true
+                      }
+alert("Starting...")
+                // Sending data ???
+                //var vm = this;
+                /*this.$http
+                        .get('/new')
+                        .then(function (response) {
+                            alert(response.data)
+                        }).catch( error => {
+                    alert(error.response)
+                });*/
+                this.$http.post('http://localhost/new', {
+                    name: "lol",
+                    text: "kek",
+                    updatedAt: new Date().toLocaleString()
+                }).then(response => {
+                   var arr = response.data;
+                    for (var i=0; i<response.data.length; i++) {
+                        alert(response.data[i])
+                    }
+                }).catch(error => {
+                    alert(error.response)
+                });
+
+alert("fine")
+
+                this.tasks.push({
+                    name: title,
+                    text: text,
+                    updateAt: new Date().toLocaleString()
+                })
+                //document.getElementById("titleSome").value = ""
+                //document.getElementById("textSome").value = ""
+
+                },
+            }
+        })
+</script>
+
+</body>
+</html>

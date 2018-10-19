@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com/gorilla/mux" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com1/gorilla/mux" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com2/AlexeySin/simple-Go" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/github.com3/go-sql-driver/mysql" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/monkey/gorilla/mux" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mux" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/simple/AlexeySin/simple-Go" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/sql/go-sql-driver/mysql" vcs="Git" />
   </component>

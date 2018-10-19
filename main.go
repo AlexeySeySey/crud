@@ -5,13 +5,13 @@ package main
 */
 
 import (
-	"./monkey/gorilla/mux"
 	"./servs"
 	"fmt"
 	"log"
 	"net/http"
 	"sync"
 	"time"
+	"./monkey/gorilla/mux"
 )
 
 var notes = servs.Note{}
@@ -19,7 +19,6 @@ var notes = servs.Note{}
 func Main(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./templates/index.html")
 }
-
 
 func NewOne(w http.ResponseWriter, r *http.Request) {
 	// ! putting data to database and return answer
@@ -35,13 +34,15 @@ func main() {
 	router.HandleFunc("/", Main).Methods("GET")
 	router.HandleFunc("/new", NewOne).Methods("POST")
 
-	fmt.Print("Have func !)) ")
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./templates/src")))
+
+	fmt.Print("Server running ")
 
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		for i:=0;i<5;i++ {
+		for i := 0; i < 5; i++ {
 			fmt.Print(".")
 			time.Sleep(time.Second)
 		}
@@ -52,4 +53,3 @@ func main() {
 	wg.Wait()
 
 }
-

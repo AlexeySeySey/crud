@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
+	"../monkey/gorilla/mux"
 	_ "../sql/go-sql-driver/mysql"
 )
 
@@ -75,9 +77,7 @@ func (note *Note) FetchAll(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(d.Tabledata)
 }
 
-func (note *Note) NewOne(w http.ResponseWriter, r *http.Request) {
-
-	// if created != nil -> change only updated + created err
+func NewOne(w http.ResponseWriter, r *http.Request) {
 
 	var name string = r.FormValue("name")
 	var text string = r.FormValue("text")
@@ -88,5 +88,37 @@ func (note *Note) NewOne(w http.ResponseWriter, r *http.Request) {
 	}
 	in.Exec(name, text)
 
-	fmt.Fprint(w, "Added")
+}
+
+func DropOne(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+
+	del, err := db.Prepare("delete from Notes where id = ?")
+	if err != nil {
+		log.Fatal(nil)
+	}
+
+	del.Exec(vars["id"])
+
+}
+
+func UpdateOne(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+
+	fmt.Fprint(w, vars)
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	upd, err := db.Prepare("update Notes set name = ?, text = ?, updated = NOW() where id = ?")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	upd.Exec(vars["name"], vars["text"], id)
+
 }

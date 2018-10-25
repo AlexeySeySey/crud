@@ -14,14 +14,19 @@ var router = mux.NewRouter()
 
 func main() {
 
-	router.HandleFunc("/new", notes.NewOne).Methods("POST")
+	router.HandleFunc("/new", servs.NewOne).Methods("POST")
 	router.HandleFunc("/", servs.Main).Methods("GET")
 	router.HandleFunc("/fetch", notes.FetchAll).Methods("GET")
+	router.HandleFunc("/delete/{id}", servs.DropOne).Methods("DELETE")
+	router.HandleFunc("/update/{id}", servs.UpdateOne).Methods("PUT")
 
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./templates/src")))
 
-	fmt.Print("Server running ")
+	fmt.Print("Server running... ")
 
-	log.Fatal(http.ListenAndServe(":8000", router))
+	err := http.ListenAndServe(":8000", router)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }

@@ -16,7 +16,7 @@
     <script src="http://unpkg.com/element-ui/lib/index.js"></script>
     <script src="http://unpkg.com/element-ui/lib/umd/locale/ja.js"></script>
 
-    <title>Album example for Bootstrap</title>
+    <title>App</title>
 
     <style>
         body {
@@ -32,8 +32,9 @@
             background-color:lightgrey;
         }
         .rightPanel{
-             padding-left:1000px !important;
-             padding-bottom: 150px !important;
+             position:absolute;
+             left:1100px;
+             top:1px;
         }
         .trash{
            font-size: 50px !important;
@@ -42,8 +43,11 @@
            cursor:pointer;
         }
         .actualData{
-            max-width: 870px !important;
-            padding-bottom: 300px !important;
+            max-width: 300px !important;
+            padding-bottom: 900px !important;
+        }
+        .upInfo{
+            margin-left: 800px !important;
         }
     </style>
 
@@ -51,10 +55,15 @@
 
 <body>
 
+    <br> 
+
     <div class="container-fluid" id="Main">
         <div style="position:fixed">
+
+
             <div class="alert alert-dark" style="width: 900px">
                 <h4 class="text-center">Tasks</h4>
+
                 <div class="form-group" id="formData">
                     <input id="titleSome" type="text" class="form-control" name="name" placeholder="Title...">
                     <br>
@@ -64,27 +73,34 @@
                         <button id="createButton" class="btn btn-primary btn-large" v-on:click="newOne()">Add</button>
                     </div>
                 </div>
+
             </div>
+
+
             <div v-if="displays">
-            <div id="actualData" class="alert alert-secondary"></div>
+                <div id="actualData" class="alert alert-secondary"></div>
             </div>
-        </div>
-        <hr>
-        <div class="rightPanel">
-            <div class="row" style="width:2300px !important">
-                <div class="col-4">
-                    <div class="list-group" v-for="task in tasks">
-                        <div class="btn-group">
-                            <button v-on:click="display(task)" id="taskName" type="button" class="list-group-item list-group-item-action">
-                                <h4> $( task.Name ) </h4>
-                            </button>
-                            <button class="btn-danger raunded-right trashButton" style="width:100px !important">
-                                <i class="fa fa-trash trash"></i>
-                            </button>
+
+
+            <hr>
+            <div class="rightPanel">
+                <div class="row" style="width:2300px !important">
+                    <div class="col-4">
+                        <div class="list-group" v-for="task in tasks">
+                            <div class="btn-group">
+                                <button v-on:click="display(task)" id="taskName" type="button" class="list-group-item list-group-item-action">
+                                    <h4> $( task.Name ) </h4>
+                                </button>
+                                <button class="btn-danger raunded-right trashButton" style="width:100px !important"
+                                    v-on:click="dropOne(task.Id)">
+                                    <i class="fa fa-trash trash"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"

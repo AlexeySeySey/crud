@@ -8,12 +8,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"../monkey/gorilla/mux"
-	_ "../sql/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 )
 
 const (
-	views = "./templates"
+	indexPage = "public/index.html"
 )
 
 var DB = map[string]string{
@@ -45,7 +45,7 @@ type Note struct {
 }
 
 func Main(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, views+"/index.html")
+	http.ServeFile(w, r, indexPage)
 }
 
 type Data struct {

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"spa-example/servs"
 
-	"./monkey/gorilla/mux"
-	"./servs"
+	"github.com/gorilla/mux"
 )
 
 var notes = servs.Note{}
@@ -20,7 +20,8 @@ func main() {
 	router.HandleFunc("/delete/{id}", servs.DropOne).Methods("DELETE")
 	router.HandleFunc("/update/{id}", servs.UpdateOne).Methods("PUT")
 
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./templates/src")))
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/js/")))
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/css/")))
 
 	fmt.Print("Server running... ")
 

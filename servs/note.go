@@ -19,10 +19,10 @@ const (
 var DB = map[string]string{
 	"RDBMS":    "mysql",
 	"NAME":     "root",
-	"PASSWORD": "16d08d2000d",
+	"PASSWORD": "root",
 	"ADDRESS":  "127.0.0.1",
 	"PORT":     "3306",
-	"DBNAME":   "GoSome",
+	"DBNAME":   "GoCrud",
 	"PROTOCOL": "tcp",
 }
 
